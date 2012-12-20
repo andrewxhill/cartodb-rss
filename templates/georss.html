@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <rss version="2.0" 
+      xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+     <title>{{table_name}}</title>
+     <description>Real-time feed from {{table_name}} at http://{{user_name}}.cartodb.com</description>
+     <link>http://{{user_name}}.cartodb.com/tables/{{table_name}}/public</link>
+     <dc:publisher>{{user_name}}@cartodb</dc:publisher>
+     <pubDate>{{latest}}</pubDate>
+{% for row in rows %}
+     <item>
+       <pubDate>row.updated_at</pubDate>
+       <title>{{row.cartodb_id}}</title>
+       <description>{{row.description}}</description>
+       <link>http://{{user_name}}.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20{{table_name}}%20WHERE%20cartodb_id={{row.cartodb_id}}</link>
+       <geo:lat>{{row.lat}}</geo:lat>
+       <geo:long>{{row.lon}}</geo:long>
+     </item>
+{% endfor %}
+   </channel>
+ </rss>

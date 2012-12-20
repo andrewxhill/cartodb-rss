@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" 
+       xmlns:georss="http://www.georss.org/georss">
+<title>{{user_name}}</title>
+<link href="http://{{user_name}}.cartodb.com/tables/{{table_name}}/public" rel="self"/>
+<id>http://{{host}}.cartodb.com/tables/{{table_name}}</id>
+<updated>2011-09-17T08:14:49.875423Z</updated>
+<generator uri="http://www.cartodb.com/">www.cartodb.com</generator>
+
+{% for row in rows %}
+<entry>
+
+	<title><![CDATA[{{row.cartodb_id}}]]></title>
+	<link href="http://{{user_name}}.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20{{table_name}}%20WHERE%20cartodb_id={{row.cartodb_id}}"/>
+	<id>http://{{host}}.cartodb.com/tables/{{table_name}}/{{row.cartodb_id}}</id>
+	<updated>{{row.updated_at}}</updated>
+	<author><name>{{user_name|escape}}</name></author>
+	<georss:point>{{row.lon|floatformat:5}} {{row.lat|floatformat:5}}</georss:point>
+	<published>{{row.created_at}}</published>
+	<summary type="xhtml"><div xmlns="http://www.w3.org/1999/xhtml">{{row.description|escape}}</div>
+	</summary>
+
+</entry>
+{% endfor %}
+</feed>
